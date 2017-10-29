@@ -1,6 +1,6 @@
 // @flow
-'use strict'
+import {
+  greetings
+} from 'ethly-api';
 
-let greeting : string = "Hello, World!";
-
-console.log(greeting);
+greetings();

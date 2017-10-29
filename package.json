@@ -4,7 +4,7 @@
   "description": "Web Server for eth.ly",
   "scripts": {
     "build": "gulp build",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "gulp test"
   },
   "repository": {
@@ -23,6 +23,7 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.0.0",
+    "ethly-api": "ethly/api",
     "flow-bin": "^0.57.3",
     "flow-typed": "^2.2.1",
     "gulp-babel": "^7.0.0",
