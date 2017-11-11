@@ -1,5 +1,5 @@
 // flow-typed signature: 96101793cb26db71f315f393ae83315a
-// flow-typed version: b59bb6c739/jasmine_v2.4.x/flow_vx.x.x
+// flow-typed version: b59bb6c739/jasmine_v2.4.x/flow_>=v0.32.x
 
 /* eslint-disable flowtype/no-weak-types */
 
