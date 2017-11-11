@@ -3,5 +3,12 @@ Web App for the Link Storage
 
 # How to run
 ```
-node build/index.js
+# Run mongodb instance
+mongod
+
+# Build project
+npm run build
+
+# Start server
+npm run start
 ```

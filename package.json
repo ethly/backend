@@ -5,6 +5,7 @@
   "scripts": {
     "build": "gulp build",
     "prepare": "npm run build",
+    "start": "nodemon build/index.js",
     "test": "gulp test"
   },
   "repository": {
@@ -23,6 +24,7 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.0.0",
+    "body-parser": "^1.18.2",
     "ethly-api": "ethly/api",
     "express": "^4.16.2",
     "flow-bin": "^0.57.3",
@@ -34,6 +36,10 @@
     "gulp-run": "^1.7.1",
     "gulp": "^3.9.1",
     "jasmine": "^2.8.0",
-    "lazypipe": "^1.0.1"
+    "lazypipe": "^1.0.1",
+    "mongoose": "^4.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
