@@ -1,11 +1,8 @@
 // @flow
-import * as Api from 'ethly-api'
-
 import mongoose from 'mongoose'
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import Link from './api/models/linksModel'
 import routes from './api/routes/linksRoutes'
 
 // greetings();
