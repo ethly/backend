@@ -1,7 +1,7 @@
 // @flow
 import type {$Request, $Response, } from 'express'
 
-import Link from '../models/linksModel'
+import Link from 'api/models/linksModel'
 
 function appendHeader(res: $Response) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8000')

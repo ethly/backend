@@ -1,6 +1,6 @@
 // @flow
 
-import linksController from '../controllers/linksController'
+import linksController from 'api/controllers/linksController'
 import type {$Application, } from 'express'
 
 module.exports = (app: $Application) => {
