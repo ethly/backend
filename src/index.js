@@ -1,20 +1,22 @@
 // @flow
-import * as Api from 'ethly-api'
-
 import mongoose from 'mongoose'
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import Link from './api/models/linksModel'
-import routes from './api/routes/linksRoutes'
-
-// greetings();
+import routes from 'api/routes/linksRoutes'
 
 const app = express()
 const port = process.env.PORT || 3000
 
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost/LinksTempDB')
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
 app.use(bodyParser.urlencoded({ extended: true, }))
 app.use(bodyParser.json())

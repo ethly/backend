@@ -1,9 +1,9 @@
 // @flow
 
-import linksController from '../controllers/linksController'
-import express from 'express'
+import linksController from 'api/controllers/linksController'
+import type {$Application, } from 'express'
 
-module.exports = (app: *) => {
+module.exports = (app: $Application) => {
   // links Routes
   app.route('/links')
     .get(linksController.listAllLinks)
@@ -11,4 +11,5 @@ module.exports = (app: *) => {
 
   app.route('/links/:linkId')
     .get(linksController.readLink)
+    .delete(linksController.deleteLink)
 }
