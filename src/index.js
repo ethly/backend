@@ -11,14 +11,16 @@ const port = process.env.PORT || 3000
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost/LinksTempDB')
 
-app.use((req, res, next) => {
+app.use((req: $Subtype <express$Request>, res: express$Response, next: express$NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
   next()
 })
 
-app.use(bodyParser.urlencoded({ extended: true, }))
+app.use(bodyParser.urlencoded({
+  extended: true,
+}))
 app.use(bodyParser.json())
 
 routes(app) // register the route
