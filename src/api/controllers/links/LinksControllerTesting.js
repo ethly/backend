@@ -8,7 +8,7 @@ import type {
 import {
   LinksController,
 } from 'api/controllers/links/LinksController'
-import Link from 'api/models/linksModel'
+import Link from 'api/models/db/linksModel'
 
 export class LinksControllerTesting implements LinksController {
   listAllLinks(req: $Request, res: $Response) {
