@@ -8,7 +8,7 @@ import {
  * In-memory implementation of links storage for prod server.
  */
 export default class LinksStorageProd {
-  linksMap: Map
+  linksMap: Map<String, LinkSpecification>
 
   constructor() {
     this.linksMap = new Map()
