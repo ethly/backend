@@ -2,13 +2,13 @@
 
 import {
   LinkSpecification,
-} from 'api/models/db/LinkSpecification'
+} from 'prod/model/LinkSpecification'
 
 /*
  * In-memory implementation of links storage for prod server.
  */
 export default class LinksStorageProd {
-  linksMap: Map<String, LinkSpecification>
+  linksMap: Map<string, LinkSpecification>
 
   constructor() {
     this.linksMap = new Map()
@@ -25,7 +25,7 @@ export default class LinksStorageProd {
   }
 
   getAllLinks(): Promise<Array<LinkSpecification>> {
-    return Promise.resolve(this.linksMap.values())
+    return Promise.resolve(Array.from(this.linksMap.values()))
   }
 
   getLink(id: string): Promise<?LinkSpecification> {

@@ -2,13 +2,13 @@
 
 import {
   LinksController,
-} from 'api/controllers/links/LinksController'
+} from 'controllers/LinksController'
 import {
   LinksControllerProduction,
-} from 'api/controllers/links/LinksControllerProduction'
+} from 'prod/controllers/LinksControllerProduction'
 import {
   LinksControllerTesting,
-} from 'api/controllers/links/linksControllerTesting'
+} from 'staging/LinksControllerTesting'
 
 export const linksController: LinksController =
   process.env.NODE_ENV === 'production'

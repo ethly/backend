@@ -23,7 +23,8 @@
   "license": "GPL-3.0",
   "main": "build/index.js",
   "dependencies": {
-    "ethly-api": "ethly/api",
+    "config-js": "^1.1.9",
+    "ethly-api": "github:ethly/api",
     "express": "^4.16.2",
     "mongoose": "^4.13.1"
   },

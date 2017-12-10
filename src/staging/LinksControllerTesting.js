@@ -7,8 +7,13 @@ import type {
 
 import {
   LinksController,
-} from 'api/controllers/links/LinksController'
-import Link from 'api/models/db/linksModel'
+} from 'controllers/LinksController'
+import {
+  LinkSpecification,
+} from 'prod/model/LinkSpecification'
+import Link from 'staging/LinkDbModel'
+
+const date = new Date()
 
 export class LinksControllerTesting implements LinksController {
   listAllLinks(req: $Request, res: $Response) {
@@ -21,17 +26,14 @@ export class LinksControllerTesting implements LinksController {
   }
 
   createLink(req: $Request, res: $Response) {
-    let newLink = new Link(req.body)
-    newLink.save((err: string, task: string) => {
-      if (err) {
-        res.send(err)
-      }
-      res.json(task)
-    })
-  }
+    let specs = LinkSpecification.fromBodyWithId('', req.body)
+    specs.timestamp = date.getTime()
 
-  readLink(req: $Request, res: $Response) {
-    Link.findById(req.params.linkId, (err: string, task: string) => {
+    console.log(specs)
+
+    const dbLink = new Link(specs)
+    console.log(dbLink)
+    dbLink.save((err: string, task: string) => {
       if (err) {
         res.send(err)
       }
