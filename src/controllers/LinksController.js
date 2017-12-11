@@ -9,6 +9,4 @@ export interface LinksController {
   listAllLinks(req: $Request, res: $Response): void;
 
   createLink(req: $Request, res: $Response): void;
-
-  deleteLink(req: $Request, res: $Response): void;
 }

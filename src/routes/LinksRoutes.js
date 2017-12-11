@@ -5,6 +5,9 @@ import type {
 } from 'express'
 
 import {
+  LinksControllerTesting,
+} from 'staging/LinksControllerTesting'
+import {
   linksControllerPromise,
 } from 'controllers/index'
 
@@ -14,7 +17,9 @@ export default function(app: $Application) {
       .get(controller.listAllLinks)
       .post(controller.createLink)
 
-    app.route('/links/:linkId')
-      .delete(controller.deleteLink)
+    if (process.env.NODE_ENV === 'development') {
+      const ctrl = ((controller: any): LinksControllerTesting)
+      app.route('/links/:linkId').delete(ctrl.deleteLink)
+    }
   })
 }
