@@ -28,9 +28,7 @@ export default class EthereumLinksApi {
 
   static createLinksApi(): Promise<EthereumLinksApi> {
     return createApiForAddress(addresses.contract, 'http://localhost:8545')
-      .then(api => {
-        return new EthereumLinksApi(api)
-      })
+      .then(api => new EthereumLinksApi(api))
   }
 
   getLinksCount(): Promise<number> {
@@ -39,18 +37,14 @@ export default class EthereumLinksApi {
 
   listAllLinks(): Promise<Array<LinkSpecification>> {
     return this.api.getAllLinks()
-      .then(links => {
-        return links.map((link, id) => {
-          return new LinkSpecification(
-            id.toString(),
-            link.label,
-            link.url,
-            link.description,
-            link.hashtags,
-            link.timestamp
-          )
-        })
-      })
+      .then(links => links.map((link, id) => new LinkSpecification(
+        id.toString(),
+        link.label,
+        link.url,
+        link.description,
+        link.hashtags,
+        link.timestamp
+      )))
   }
 
   addLink(link: LinkSpecification): Promise<TransactionReceipt> {

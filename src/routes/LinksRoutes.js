@@ -8,7 +8,7 @@ import {
   linksControllerPromise,
 } from 'controllers/index'
 
-module.exports = (app: $Application) => {
+export default function(app: $Application) {
   linksControllerPromise.then(controller => {
     app.route('/links')
       .get(controller.listAllLinks)
