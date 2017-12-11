@@ -16,17 +16,21 @@ import {
 export class LinksControllerProduction implements LinksController {
   api: EthereumLinksApi
 
-  constructor() {
-    EthereumLinksApi.createLinksApi()
-      .then(api => {
-        this.api = api
-        console.log('Api created')
-      })
+  constructor(api: EthereumLinksApi) {
+    this.api = api
 
     let unsafeThis = (this: any)
     unsafeThis.listAllLinks = this.listAllLinks.bind(this)
     unsafeThis.createLink = this.createLink.bind(this)
     unsafeThis.deleteLink = this.deleteLink.bind(this)
+  }
+
+  static createController(): Promise<LinksControllerProduction> {
+    return EthereumLinksApi.createLinksApi()
+      .then(api => {
+        console.log('Api created')
+        return new LinksControllerProduction(api)
+      })
   }
 
   listAllLinks(req: $Request, res: $Response) {

@@ -23,7 +23,7 @@ export class LinkSpecification {
   }
 
   /**
-   * Creates {@type LinkSpecification} from row JSON.
+   * Creates {@type LinkSpecification} from raw JSON.
    */
   static fromBodyWithId(id: string, body: any): LinkSpecification {
     if (id == null) {

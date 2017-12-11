@@ -10,7 +10,7 @@ import {
   LinksControllerTesting,
 } from 'staging/LinksControllerTesting'
 
-export const linksController: LinksController =
+export const linksControllerPromise: Promise<LinksController> =
   process.env.NODE_ENV === 'production'
-    ? new LinksControllerProduction()
-    : new LinksControllerTesting()
+    ? LinksControllerProduction.createController()
+    : LinksControllerTesting.createController()

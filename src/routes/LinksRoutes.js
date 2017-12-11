@@ -5,14 +5,16 @@ import type {
 } from 'express'
 
 import {
-  linksController,
+  linksControllerPromise,
 } from 'controllers/index'
 
 module.exports = (app: $Application) => {
-  app.route('/links')
-    .get(linksController.listAllLinks)
-    .post(linksController.createLink)
+  linksControllerPromise.then(controller => {
+    app.route('/links')
+      .get(controller.listAllLinks)
+      .post(controller.createLink)
 
-  app.route('/links/:linkId')
-    .delete(linksController.deleteLink)
+    app.route('/links/:linkId')
+      .delete(controller.deleteLink)
+  })
 }

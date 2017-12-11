@@ -10,19 +10,16 @@ const {
 } = eth
 
 /**
- * Gas from console.
+ * Deploys new contract.
  * @param account address of account to deploy contract to
  * @param httpAddress address to open connection on
  * @returns {Promise<EthlyApi>} created api
  */
 function deployContract(account: EthereumAddress, httpAddress: string): Promise<EthlyApi> {
-  return Promise.resolve(new HttpEthereumClient(httpAddress))
-    .then(client => {
-      return EthlyApi.deployContract(client, {
-        from: account,
-        gas: 2100000,
-      })
-    })
+  return EthlyApi.deployContract(new HttpEthereumClient(httpAddress), {
+    from: account,
+    gas: 2100000,
+  })
 }
 
 /**
@@ -32,10 +29,7 @@ function deployContract(account: EthereumAddress, httpAddress: string): Promise<
  * @returns {Promise<EthlyApi>} created api
  */
 function createApiForAddress(account: EthereumAddress, httpAddress: string): Promise<EthlyApi> {
-  return Promise.resolve(new HttpEthereumClient(httpAddress))
-    .then(client => {
-      return EthlyApi.forContract(client, account)
-    })
+  return EthlyApi.forContract(new HttpEthereumClient(httpAddress), account)
 }
 
 export {

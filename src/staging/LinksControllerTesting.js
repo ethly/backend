@@ -16,6 +16,10 @@ import Link from 'staging/LinkDbModel'
 const date = new Date()
 
 export class LinksControllerTesting implements LinksController {
+  static createController(): Promise<LinksControllerTesting> {
+    return Promise.resolve(new LinksControllerTesting())
+  }
+
   listAllLinks(req: $Request, res: $Response) {
     Link.find({}, (err: string, task: string) => {
       if (err) {
