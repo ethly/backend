@@ -55,10 +55,4 @@ export class LinksControllerProduction implements LinksController {
     )
       .then(receipt => res.send(receipt))
   }
-
-  deleteLink(req: $Request, res: $Response) {
-    res.json({
-      message: 'Cannot delete link stored on Ethereum',
-    })
-  }
 }
