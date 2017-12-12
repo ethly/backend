@@ -17,6 +17,12 @@ export default function(app: $Application) {
       .get(controller.listAllLinks)
       .post(controller.createLink)
 
+    app.route('/links/signed')
+      .post(controller.createAddLinkTransaction)
+
+    app.route('/links/execute')
+      .post(controller.executeSignedTransaction)
+
     if (process.env.NODE_ENV === 'development') {
       const ctrl = ((controller: any): LinksControllerTesting)
       app.route('/links/:linkId').delete(ctrl.deleteLink)

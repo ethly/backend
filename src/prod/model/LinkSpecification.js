@@ -1,5 +1,9 @@
 // @flow
 
+import {
+  Link,
+} from 'ethly-api'
+
 /**
  * Class that represents link in db. You could use linksModel to add new link
  * like this: new Link(new LinkSpecification(...)).save(...)
@@ -13,13 +17,33 @@ export class LinkSpecification {
   hashtags: Array<string>
   timestamp: number
 
-  constructor(id: string, label: string, url:string, description: string, hashtags: Array<string>, timestamp: number) {
+  constructor(id: string, label: string, url: string, description: string, hashtags: Array<string>, timestamp: number) {
     this.id = id
     this.label = label
     this.url = url
     this.description = description
     this.hashtags = hashtags
     this.timestamp = timestamp
+  }
+
+  static toApiLink(link: LinkSpecification): Link {
+    return new Link(
+      link.url,
+      link.label,
+      link.description,
+      link.hashtags
+    )
+  }
+
+  static fromApiLinkWithId(id: string, link: Link): LinkSpecification {
+    return new LinkSpecification(
+      id,
+      link.label,
+      link.url,
+      link.description,
+      link.hashtags,
+      link.timestamp
+    )
   }
 
   /**
