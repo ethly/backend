@@ -11,6 +11,19 @@ const LinkSchema = new mongoose.Schema({
     type: String,
     required: 'Please specify URL',
   },
+  description: {
+    type: String,
+  },
+  hashtags: [
+    {
+      type: String,
+      required: 'Please specify hashtags',
+    },
+  ],
+  timestamp: {
+    type: Number,
+    required: 'Please specify timestamp',
+  },
 })
 
 module.exports = mongoose.model('Links', LinkSchema)

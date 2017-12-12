@@ -1,14 +1,16 @@
 [ignore]
-build/
-build_test/
+.*/build/.*
+.*/build_test/.*
+<PROJECT_ROOT>/node_modules/.*
 
 [include]
-
 [libs]
 flow-typed/
+./libdefs.js
 
 [lints]
 
 [options]
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=src
+all=true
