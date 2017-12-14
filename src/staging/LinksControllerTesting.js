@@ -8,6 +8,7 @@ import type {
 import {
   LinksController,
 } from 'controllers/LinksController'
+import ResponseFactory from 'prod/utils/ResponseFactory'
 import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
@@ -23,9 +24,10 @@ export class LinksControllerTesting implements LinksController {
   listAllLinks(req: $Request, res: $Response) {
     Link.find({}, (err: string, task: string) => {
       if (err) {
-        res.send(err)
+        ResponseFactory.responseWithError(res, err)
+      } else {
+        ResponseFactory.responseWithData(res, task)
       }
-      res.json(task)
     })
   }
 
@@ -33,15 +35,13 @@ export class LinksControllerTesting implements LinksController {
     let specs = LinkSpecification.fromBodyWithId('', req.body)
     specs.timestamp = date.getTime()
 
-    console.log(specs)
-
     const dbLink = new Link(specs)
-    console.log(dbLink)
     dbLink.save((err: string, task: string) => {
       if (err) {
-        res.send(err)
+        ResponseFactory.responseWithError(res, err)
+      } else {
+        ResponseFactory.responseWithData(res, task)
       }
-      res.json(task)
     })
   }
 
@@ -50,23 +50,18 @@ export class LinksControllerTesting implements LinksController {
       _id: req.params.linkId,
     }, (err: string, task: string) => {
       if (err) {
-        res.send(err)
+        ResponseFactory.responseWithError(res, err)
+      } else {
+        ResponseFactory.responseWithData(res, task)
       }
-      res.json({
-        message: 'Link successfully deleted',
-      })
     })
   }
 
   createAddLinkTransaction(req: $Request, res: $Response) {
-    res.json({
-      message: 'You should use add link in staging',
-    })
+    ResponseFactory.responseWithError(res, 'You should use add link in staging')
   }
 
   executeSignedTransaction(req: $Request, res: $Response) {
-    res.json({
-      message: 'Cannot execute signed transactions in staging',
-    })
+    ResponseFactory.responseWithError(res, 'Cannot execute signed transactions in staging')
   }
 }

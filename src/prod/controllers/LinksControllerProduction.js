@@ -9,6 +9,8 @@ import EthereumLinksApi from 'prod/model/EthereumLinksApi'
 import {
   LinksController,
 } from 'controllers/LinksController'
+import ResponseFactory from 'prod/utils/ResponseFactory'
+
 import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
@@ -37,15 +39,15 @@ export class LinksControllerProduction implements LinksController {
   listAllLinks(req: $Request, res: $Response) {
     this.api.listAllLinks()
       .then(links => {
-        res.json({
-          links: links,
-        })
+        ResponseFactory.responseWithData(res, links)
       })
   }
 
   createLink(req: $Request, res: $Response) {
     this.api.addLink(LinkSpecification.fromBodyWithId('0', req.body))
-      .then(receipt => res.send(receipt))
+      .then(receipt => {
+        ResponseFactory.responseWithData(res, receipt)
+      })
   }
 
   createAddLinkTransaction(req: $Request, res: $Response) {
@@ -53,11 +55,15 @@ export class LinksControllerProduction implements LinksController {
       LinkSpecification.fromBodyWithId('0', req.body.link),
       req.body.draft
     )
-      .then(transaction => res.send(transaction))
+      .then(transaction => {
+        ResponseFactory.responseWithData(transaction)
+      })
   }
 
   executeSignedTransaction(req: $Request, res: $Response) {
     this.api.executeSignedTransaction(req.body.transaction)
-      .then(receipt => res.send(receipt))
+      .then(receipt => {
+        ResponseFactory.responseWithData(res, receipt)
+      })
   }
 }
