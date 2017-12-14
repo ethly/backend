@@ -57,4 +57,16 @@ export class LinksControllerTesting implements LinksController {
       })
     })
   }
+
+  createAddLinkTransaction(req: $Request, res: $Response) {
+    res.json({
+      message: 'You should use add link in staging',
+    })
+  }
+
+  executeSignedTransaction(req: $Request, res: $Response) {
+    res.json({
+      message: 'Cannot execute signed transactions in staging',
+    })
+  }
 }

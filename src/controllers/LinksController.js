@@ -9,4 +9,8 @@ export interface LinksController {
   listAllLinks(req: $Request, res: $Response): void;
 
   createLink(req: $Request, res: $Response): void;
+
+  createAddLinkTransaction(req: $Request, res: $Response): void;
+
+  executeSignedTransaction(req: $Request, res: $Response): void;
 }

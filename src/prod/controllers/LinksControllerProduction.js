@@ -22,7 +22,8 @@ export class LinksControllerProduction implements LinksController {
     let unsafeThis = (this: any)
     unsafeThis.listAllLinks = this.listAllLinks.bind(this)
     unsafeThis.createLink = this.createLink.bind(this)
-    unsafeThis.deleteLink = this.deleteLink.bind(this)
+    unsafeThis.createAddLinkTransaction = unsafeThis.createAddLinkTransaction.bind(this)
+    unsafeThis.executeSignedTransaction = unsafeThis.executeSignedTransaction.bind(this)
   }
 
   static createController(): Promise<LinksControllerProduction> {
@@ -43,16 +44,20 @@ export class LinksControllerProduction implements LinksController {
   }
 
   createLink(req: $Request, res: $Response) {
-    this.api.addLink(
-      new LinkSpecification(
-        '0', // fake id for now, this is not stored in db so it's ok
-        req.body.label,
-        req.body.url,
-        req.body.description,
-        req.body.hashtags,
-        0, // no timestamp before storing
-      )
+    this.api.addLink(LinkSpecification.fromBodyWithId('0', req.body))
+      .then(receipt => res.send(receipt))
+  }
+
+  createAddLinkTransaction(req: $Request, res: $Response) {
+    this.api.createAddLinkTransaction(
+      LinkSpecification.fromBodyWithId('0', req.body.link),
+      req.body.draft
     )
+      .then(transaction => res.send(transaction))
+  }
+
+  executeSignedTransaction(req: $Request, res: $Response) {
+    this.api.executeSignedTransaction(req.body.transaction)
       .then(receipt => res.send(receipt))
   }
 }

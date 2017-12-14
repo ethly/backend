@@ -2,11 +2,13 @@
 
 import EthlyApi, {
   eth,
-  Link,
 } from 'ethly-api'
 
 const {
+  TransactionDraft,
   TransactionReceipt,
+  SignedTransaction,
+  AddLinkTransaction,
 } = eth
 
 import {
@@ -37,25 +39,21 @@ export default class EthereumLinksApi {
 
   listAllLinks(): Promise<Array<LinkSpecification>> {
     return this.api.getAllLinks()
-      .then(links => links.map((link, id) => new LinkSpecification(
-        id.toString(),
-        link.label,
-        link.url,
-        link.description,
-        link.hashtags,
-        link.timestamp
-      )))
+      .then(links => links.map((link, id) => LinkSpecification.fromApiLinkWithId(id.toString(), link)))
   }
 
   addLink(link: LinkSpecification): Promise<TransactionReceipt> {
-    return this.api.addLink(new Link(
-      link.url,
-      link.label,
-      link.description,
-      link.hashtags
-    ), {
+    return this.api.addLink(LinkSpecification.toApiLink(link), {
       from: addresses.account,
       gas: 2100000,
     })
+  }
+
+  createAddLinkTransaction(link: LinkSpecification, draft: TransactionDraft): Promise<AddLinkTransaction> {
+    return Promise.resolve(this.api.createAddLinkTransaction(LinkSpecification.toApiLink(link), draft))
+  }
+
+  executeSignedTransaction(transaction: SignedTransaction): Promise<TransactionReceipt> {
+    return this.api.executeSignedTransaction(transaction)
   }
 }
