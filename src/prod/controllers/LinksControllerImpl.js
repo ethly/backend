@@ -24,6 +24,7 @@ export class LinksControllerImpl implements LinksController {
 
     let unsafeThis = (this: any)
     unsafeThis.listAllLinks = this.listAllLinks.bind(this)
+    unsafeThis.listLinksByHashtag = this.listLinksByHashtag.bind(this)
     unsafeThis.createLink = this.createLink.bind(this)
     unsafeThis.createAddLinkTransaction = unsafeThis.createAddLinkTransaction.bind(this)
     unsafeThis.executeSignedTransaction = unsafeThis.executeSignedTransaction.bind(this)
@@ -33,6 +34,19 @@ export class LinksControllerImpl implements LinksController {
     this.api.listAllLinks()
       .then(links => {
         ResponseFactory.responseWithData(res, links)
+      })
+      .catch(err => {
+        ResponseFactory.responseWithError(res, err)
+      })
+  }
+
+  listLinksByHashtag(req: $Request, res: $Response) {
+    this.api.listAllLinks()
+      .then(links => {
+        const filtered = links.filter(link => {
+          return link.hashtags.indexOf(req.params.hashtag) > -1
+        })
+        ResponseFactory.responseWithData(res, filtered)
       })
       .catch(err => {
         ResponseFactory.responseWithError(res, err)
