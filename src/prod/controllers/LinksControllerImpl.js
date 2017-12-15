@@ -5,20 +5,21 @@ import type {
   $Response,
 } from 'express'
 
-import EthereumLinksApi from 'prod/model/EthereumLinksApi'
+import {
+  LinksApi,
+} from 'prod/model/LinksApi'
 import {
   LinksController,
-} from 'controllers/LinksController'
+} from 'prod/controllers/LinksController'
 import ResponseFactory from 'prod/utils/ResponseFactory'
-
 import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
 
-export class LinksControllerProduction implements LinksController {
-  api: EthereumLinksApi
+export class LinksControllerImpl implements LinksController {
+  api: LinksApi
 
-  constructor(api: EthereumLinksApi) {
+  constructor(api: LinksApi) {
     this.api = api
 
     let unsafeThis = (this: any)
@@ -28,18 +29,13 @@ export class LinksControllerProduction implements LinksController {
     unsafeThis.executeSignedTransaction = unsafeThis.executeSignedTransaction.bind(this)
   }
 
-  static createController(): Promise<LinksControllerProduction> {
-    return EthereumLinksApi.createLinksApi()
-      .then(api => {
-        console.log('Api created')
-        return new LinksControllerProduction(api)
-      })
-  }
-
   listAllLinks(req: $Request, res: $Response) {
     this.api.listAllLinks()
       .then(links => {
         ResponseFactory.responseWithData(res, links)
+      })
+      .catch(err => {
+        ResponseFactory.responseWithError(res, err)
       })
   }
 
@@ -47,6 +43,9 @@ export class LinksControllerProduction implements LinksController {
     this.api.addLink(LinkSpecification.fromBodyWithId('0', req.body))
       .then(receipt => {
         ResponseFactory.responseWithData(res, receipt)
+      })
+      .catch(err => {
+        ResponseFactory.responseWithError(res, err)
       })
   }
 
@@ -58,12 +57,18 @@ export class LinksControllerProduction implements LinksController {
       .then(transaction => {
         ResponseFactory.responseWithData(transaction)
       })
+      .catch(err => {
+        ResponseFactory.responseWithError(res, err)
+      })
   }
 
   executeSignedTransaction(req: $Request, res: $Response) {
     this.api.executeSignedTransaction(req.body.transaction)
       .then(receipt => {
         ResponseFactory.responseWithData(res, receipt)
+      })
+      .catch(err => {
+        ResponseFactory.responseWithError(res, err)
       })
   }
 }

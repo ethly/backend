@@ -5,11 +5,8 @@ import type {
 } from 'express'
 
 import {
-  LinksControllerTesting,
-} from 'staging/LinksControllerTesting'
-import {
   linksControllerPromise,
-} from 'controllers/index'
+} from 'prod/controllers/index'
 
 export default function(app: $Application) {
   linksControllerPromise.then(controller => {
@@ -22,10 +19,5 @@ export default function(app: $Application) {
 
     app.route('/links/execute')
       .post(controller.executeSignedTransaction)
-
-    if (process.env.NODE_ENV === 'development') {
-      const ctrl = ((controller: any): LinksControllerTesting)
-      app.route('/links/:linkId').delete(ctrl.deleteLink)
-    }
   })
 }
