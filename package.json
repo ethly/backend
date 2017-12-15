@@ -32,6 +32,7 @@
     "ethly-deploy": "github:ethly/deploy#backend",
     "flow-bin": "^0.57.3",
     "flow-typed": "^2.2.1",
+    "jasmine": "^2.8.0",
     "gulp": "^3.9.1",
     "nodemon": "^1.12.1"
   }

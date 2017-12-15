@@ -1,6 +1,7 @@
 // @flow
 
 import EthereumLinkApi from 'prod/model/EthereumLinksApi'
+import EthereumLinkApiCached from 'prod/model/EthereumLinksApiCached'
 import DbLinkApi from 'staging/DbLinksApi'
 import {
   LinksController,
@@ -14,6 +15,6 @@ export const linksControllerPromise: Promise<LinksController> =
     ? EthereumLinkApi.createLinksApi()
       .then(api => {
         console.log('Api created')
-        return new LinksControllerImpl(api)
+        return new LinksControllerImpl(new EthereumLinkApiCached(api))
       })
     : Promise.resolve(new LinksControllerImpl(new DbLinkApi()))

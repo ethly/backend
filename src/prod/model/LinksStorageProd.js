@@ -28,6 +28,10 @@ export default class LinksStorageProd {
     return Promise.resolve(Array.from(this.linksMap.values()))
   }
 
+  linksCount(): Promise<number> {
+    return Promise.resolve(this.linksMap.size)
+  }
+
   getLink(id: string): Promise<?LinkSpecification> {
     return Promise.resolve(this.linksMap.get(id))
   }
