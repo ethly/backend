@@ -29,7 +29,7 @@
     "mongoose": "^4.13.1"
   },
   "devDependencies": {
-    "ethly-deploy": "github:ethly/deploy",
+    "ethly-deploy": "github:ethly/deploy#backend",
     "flow-bin": "^0.57.3",
     "flow-typed": "^2.2.1",
     "gulp": "^3.9.1",
