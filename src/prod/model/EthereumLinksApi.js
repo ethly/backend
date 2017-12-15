@@ -12,6 +12,9 @@ const {
 } = eth
 
 import {
+  LinksApi,
+} from 'prod/model/LinksApi'
+import {
   createApiForAddress,
 } from 'prod/utils/EthlyApiFactory'
 import {
@@ -21,7 +24,7 @@ import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
 
-export default class EthereumLinksApi {
+export default class EthereumLinksApi implements LinksApi {
   api: EthlyApi
 
   constructor(api: EthlyApi) {

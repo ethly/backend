@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import routes from 'routes/LinksRoutes'
+import routes from 'prod/routes/LinksRoutes'
 import {
   deployContract,
 } from 'prod/utils/EthlyApiFactory'
