@@ -8,6 +8,8 @@ import type {
 export interface LinksController {
   listAllLinks(req: $Request, res: $Response): void;
 
+  listLinksByHashtag(req: $Request, res: $Response): void;
+
   createLink(req: $Request, res: $Response): void;
 
   createAddLinkTransaction(req: $Request, res: $Response): void;

@@ -12,12 +12,16 @@ export default function(app: $Application) {
   linksControllerPromise.then(controller => {
     app.route('/links')
       .get(controller.listAllLinks)
-      .post(controller.createLink)
-
-    app.route('/links/signed')
       .post(controller.createAddLinkTransaction)
 
-    app.route('/links/execute')
+    app.route('/links/hashtags/:hashtag')
+      .get(controller.listLinksByHashtag)
+
+    app.route('/links/testing')
+      .get(controller.listAllLinks)
+      .post(controller.createLink)
+
+    app.route('/execute')
       .post(controller.executeSignedTransaction)
   })
 }
