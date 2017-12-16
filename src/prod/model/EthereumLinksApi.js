@@ -18,9 +18,6 @@ import {
   createApiForAddress,
 } from 'prod/utils/EthlyApiFactory'
 import {
-  addresses,
-} from 'prod/utils/Config'
-import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
 
@@ -32,7 +29,7 @@ export default class EthereumLinksApi implements LinksApi {
   }
 
   static createLinksApi(): Promise<EthereumLinksApi> {
-    return createApiForAddress(addresses.contract, 'http://localhost:8545')
+    return createApiForAddress('0x66F4185b8CD92d0e3A95f8d73388a445e1d3249e', 'http://localhost:8545')
       .then(api => new EthereumLinksApi(api))
   }
 
@@ -47,7 +44,7 @@ export default class EthereumLinksApi implements LinksApi {
 
   addLink(link: LinkSpecification): Promise<TransactionReceipt> {
     return this.api.addLink(LinkSpecification.toApiLink(link), {
-      from: addresses.account,
+      from: '0x4Eb84C3BCc0c1C4Cc9d90b415D9FE42532Fe9AdC',
       gas: 2100000,
     })
   }

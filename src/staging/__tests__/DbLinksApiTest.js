@@ -1,14 +1,11 @@
 // @flow
 
 import mongoose from 'mongoose'
-import jasmine from 'jasmine'
 
 import DbLinksApi from 'staging/DbLinksApi'
 import {
   createTestLinkSpec,
 } from 'staging/TestFactory'
-
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000
 
 describe('DbLinksApi', () => {
   let api: DbLinksApi
@@ -21,6 +18,10 @@ describe('DbLinksApi', () => {
       .then(success => {
         done()
       })
+  })
+
+  afterEach(() => {
+    mongoose.disconnect()
   })
 
   describe('getLinksCount', () => {
