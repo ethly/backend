@@ -54,7 +54,7 @@ export class LinksControllerImpl implements LinksController {
   }
 
   createLink(req: $Request, res: $Response) {
-    this.api.addLink(LinkSpecification.fromBodyWithId('0', req.body))
+    this.api.addLink(LinkSpecification.fromBodyWithId('0', req.body.link))
       .then(receipt => {
         ResponseFactory.responseWithData(res, receipt)
       })
