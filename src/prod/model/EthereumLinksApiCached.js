@@ -20,9 +20,6 @@ import {
   createApiForAddress,
 } from 'prod/utils/EthlyApiFactory'
 import {
-  addresses,
-} from 'prod/utils/Config'
-import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
 

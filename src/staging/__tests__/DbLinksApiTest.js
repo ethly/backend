@@ -8,69 +8,70 @@ import {
 } from 'staging/TestFactory'
 
 describe('DbLinksApi', () => {
-  it('2 + 2', () => {
-    expect(2 + 2).toBe(4)
-  })
-  // let api: DbLinksApi
-  //
-  // beforeEach((done) => {
-  //   mongoose.connect('mongodb://localhost/testdb')
-  //   api = new DbLinksApi()
-  //
-  //   api.deleteAll()
-  //     .then(success => {
-  //       done()
-  //     })
-  // })
+  let api: DbLinksApi
 
-  // describe('getLinksCount', () => {
-  //   it('should return 0 if db is empty', () => {
-  //     return api.getLinksCount()
-  //       .then(count => {
-  //         expect(count).toBe(0)
-  //       })
-  //   })
-  // })
-  //
-  // describe('addLink', () => {
-  //   it('should add', (done) => {
-  //     return api.addLink(createTestLinkSpec('label', 'url'))
-  //       .then(link => {
-  //         expect(link.url).toBe('url')
-  //         expect(link.label).toBe('label')
-  //
-  //         return api.listAllLinks()
-  //       })
-  //       .then(links => {
-  //         expect(links.length).toBe(1)
-  //         expect(links[0].url).toBe('url')
-  //         expect(links[0].label).toBe('label')
-  //         done()
-  //       })
-  //   })
-  // })
-  //
-  // describe('createAddLinkTransaction', () => {
-  //   it('should fail', (done) => {
-  //     api.createAddLinkTransaction(
-  //       createTestLinkSpec('label', 'url'),
-  //       { account: 'account', }
-  //     )
-  //       .then(() => {
-  //         done.fail(new Error('Promise should not be resolved'))
-  //       }, (reason) => {
-  //         done()
-  //       })
-  //   })
-  // })
-  //
-  // describe('executeSignedTransaction', () => {
-  //   it('should fail', (done) => {
-  //     api.executeSignedTransaction().then(() => {
-  //       done.fail(new Error('Promise should not be resolved'))
-  //     }, (reason) => {
-  //       done()
-  //     })
-  //   })
-  // })
+  beforeEach((done) => {
+    mongoose.connect('mongodb://localhost/testdb')
+    api = new DbLinksApi()
+
+    api.deleteAll()
+      .then(success => {
+        done()
+      })
+  })
+
+  afterEach(() => {
+    mongoose.disconnect()
+  })
+
+  describe('getLinksCount', () => {
+    it('should return 0 if db is empty', () => {
+      return api.getLinksCount()
+        .then(count => {
+          expect(count).toBe(0)
+        })
+    })
+  })
+
+  describe('addLink', () => {
+    it('should add', (done) => {
+      return api.addLink(createTestLinkSpec('label', 'url'))
+        .then(link => {
+          expect(link.url).toBe('url')
+          expect(link.label).toBe('label')
+
+          return api.listAllLinks()
+        })
+        .then(links => {
+          expect(links.length).toBe(1)
+          expect(links[0].url).toBe('url')
+          expect(links[0].label).toBe('label')
+          done()
+        })
+    })
+  })
+
+  describe('createAddLinkTransaction', () => {
+    it('should fail', (done) => {
+      api.createAddLinkTransaction(
+        createTestLinkSpec('label', 'url'),
+        { account: 'account', }
+      )
+        .then(() => {
+          done.fail(new Error('Promise should not be resolved'))
+        }, (reason) => {
+          done()
+        })
+    })
+  })
+
+  describe('executeSignedTransaction', () => {
+    it('should fail', (done) => {
+      api.executeSignedTransaction().then(() => {
+        done.fail(new Error('Promise should not be resolved'))
+      }, (reason) => {
+        done()
+      })
+    })
+  })
 })
