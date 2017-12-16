@@ -25,6 +25,17 @@ export function createTestLinkSpec(label: string, url: string): LinkSpecificatio
   )
 }
 
+export function createTestLinkSpecWithId(id: string, label: string, url: string): LinkSpecification {
+  return new LinkSpecification(
+    id,
+    label,
+    url,
+    '',
+    ['test',],
+    0
+  )
+}
+
 export function createTestTransactionDraft(): TransactionDraft {
   return {
     from: 'from',

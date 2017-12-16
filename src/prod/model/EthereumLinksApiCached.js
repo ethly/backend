@@ -27,11 +27,11 @@ import {
 } from 'prod/model/LinkSpecification'
 
 export default class EthereumLinksApiCached implements LinksApi {
-  api: EthereumLinksApi
+  api: LinksApi
   cache: LinksStorageProd
 
 
-  constructor(api: EthereumLinksApi) {
+  constructor(api: LinksApi) {
     this.api = api
     this.cache = new LinksStorageProd()
   }
@@ -41,15 +41,10 @@ export default class EthereumLinksApiCached implements LinksApi {
   }
 
   listAllLinks(): Promise<Array<LinkSpecification>> {
-    Promise.all([this.api.getLinksCount(), this.cache.linksCount()])
+    return Promise.all([this.api.getLinksCount(), this.cache.linksCount()])
       .then(counts => {
         const apiLinks = counts[0]
         const cacheLinks = counts[1]
-
-        console.log(apiLinks)
-        console.log(cacheLinks)
-
-        console.log(this.cache)
 
         if (apiLinks === cacheLinks) {
           return this.cache.getAllLinks()
@@ -59,7 +54,6 @@ export default class EthereumLinksApiCached implements LinksApi {
               .then(() => Promise.resolve(links)))
         }
       })
-    return this.api.listAllLinks()
   }
 
   addLink(link: LinkSpecification): Promise<TransactionReceipt> {

@@ -7,8 +7,6 @@ import {
   createTestLinkSpec,
 } from 'staging/TestFactory'
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000
-
 describe('DbLinksApi', () => {
   let api: DbLinksApi
 
