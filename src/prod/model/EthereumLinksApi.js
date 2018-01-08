@@ -20,17 +20,31 @@ import {
 import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
+import {
+  accountConfig,
+  apiConfig,
+} from 'config'
 
 export default class EthereumLinksApi implements LinksApi {
   api: EthlyApi
 
   constructor(api: EthlyApi) {
     this.api = api
+
+    let unsafeThis = (this: any)
+
+    unsafeThis.getLinksCount = this.getLinksCount.bind(this)
+    unsafeThis.listAllLinks = this.listAllLinks.bind(this)
+    unsafeThis.addLink = this.addLink.bind(this)
+    unsafeThis.createAddLinkTransaction = unsafeThis.createAddLinkTransaction.bind(this)
+    unsafeThis.executeSignedTransaction = unsafeThis.executeSignedTransaction.bind(this)
   }
 
   static createLinksApi(): Promise<EthereumLinksApi> {
-    return createApiForAddress('0x66F4185b8CD92d0e3A95f8d73388a445e1d3249e', 'http://localhost:8545')
-      .then(api => new EthereumLinksApi(api))
+    return createApiForAddress(apiConfig.address, apiConfig.host)
+      .then(api => {
+        return new EthereumLinksApi(api)
+      })
   }
 
   getLinksCount(): Promise<number> {
@@ -44,8 +58,8 @@ export default class EthereumLinksApi implements LinksApi {
 
   addLink(link: LinkSpecification): Promise<TransactionReceipt> {
     return this.api.addLink(LinkSpecification.toApiLink(link), {
-      from: '0x4Eb84C3BCc0c1C4Cc9d90b415D9FE42532Fe9AdC',
-      gas: 2100000,
+      from: accountConfig.address,
+      gas: apiConfig.defaultGas,
     })
   }
 

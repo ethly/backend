@@ -8,8 +8,10 @@ import {
   deployContract,
 } from 'prod/utils/EthlyApiFactory'
 import {
-  addresses,
-} from 'prod/utils/Config'
+  accountConfig,
+  apiConfig,
+  dbConfig,
+} from 'config'
 
 if (process.argv[2] === 'deploy') {
   deployNewContract()
@@ -29,7 +31,7 @@ function setupApp(): express$Application {
     next()
   })
 
-  app.use(bodyParser.urlencoded({ extended: true, }))
+  app.use(bodyParser.urlencoded({extended: true,}))
   app.use(bodyParser.json())
 
   routes(app) // register the route
@@ -43,12 +45,12 @@ function setupApp(): express$Application {
 
 function setupMongoose() {
   mongoose.Promise = global.Promise
-  mongoose.connect('mongodb://localhost/LinksTempDB')
+  mongoose.connect(dbConfig.path)
 }
 
 function deployNewContract() {
   console.log('Deploy started')
-  deployContract(addresses.account, 'http://localhost:8545').then(api => {
+  deployContract(accountConfig.address, apiConfig.host).then(api => {
     console.log('Contract address: ', api.getContractAddress())
   })
     .catch(error => {

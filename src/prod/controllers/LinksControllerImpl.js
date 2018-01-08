@@ -36,7 +36,7 @@ export class LinksControllerImpl implements LinksController {
         ResponseFactory.responseWithData(res, links)
       })
       .catch(err => {
-        ResponseFactory.responseWithError(res, err)
+        ResponseFactory.responseWithError(res, err.toString())
       })
   }
 
@@ -49,7 +49,7 @@ export class LinksControllerImpl implements LinksController {
         ResponseFactory.responseWithData(res, filtered)
       })
       .catch(err => {
-        ResponseFactory.responseWithError(res, err)
+        ResponseFactory.responseWithError(res, err.toString())
       })
   }
 
@@ -59,7 +59,7 @@ export class LinksControllerImpl implements LinksController {
         ResponseFactory.responseWithData(res, receipt)
       })
       .catch(err => {
-        ResponseFactory.responseWithError(res, err)
+        ResponseFactory.responseWithError(res, err.toString())
       })
   }
 
@@ -69,10 +69,10 @@ export class LinksControllerImpl implements LinksController {
       req.body.draft
     )
       .then(transaction => {
-        ResponseFactory.responseWithData(transaction)
+        ResponseFactory.responseWithData(res, transaction)
       })
       .catch(err => {
-        ResponseFactory.responseWithError(res, err)
+        ResponseFactory.responseWithError(res, err.toString())
       })
   }
 
@@ -82,7 +82,7 @@ export class LinksControllerImpl implements LinksController {
         ResponseFactory.responseWithData(res, receipt)
       })
       .catch(err => {
-        ResponseFactory.responseWithError(res, err)
+        ResponseFactory.responseWithError(res, err.toString())
       })
   }
 }
