@@ -1,6 +1,6 @@
 // @flow
 
-import EthlyApi, {
+import {
   eth,
 } from 'ethly-api'
 
@@ -11,7 +11,6 @@ const {
   AddLinkTransaction,
 } = eth
 
-import EthereumLinksApi from 'prod/model/EthereumLinksApi'
 import LinksStorageProd from 'prod/model/LinksStorageProd'
 import {
   LinksApi,
@@ -23,14 +22,25 @@ import {
   LinkSpecification,
 } from 'prod/model/LinkSpecification'
 
+/**
+ * Wrapper for backend api with in-memory caching of links.
+ */
 export default class EthereumLinksApiCached implements LinksApi {
   api: LinksApi
   cache: LinksStorageProd
 
-
   constructor(api: LinksApi) {
     this.api = api
     this.cache = new LinksStorageProd()
+
+
+    let unsafeThis = (this: any)
+
+    unsafeThis.getLinksCount = this.getLinksCount.bind(this)
+    unsafeThis.listAllLinks = this.listAllLinks.bind(this)
+    unsafeThis.addLink = this.addLink.bind(this)
+    unsafeThis.createAddLinkTransaction = unsafeThis.createAddLinkTransaction.bind(this)
+    unsafeThis.executeSignedTransaction = unsafeThis.executeSignedTransaction.bind(this)
   }
 
   getLinksCount(): Promise<number> {

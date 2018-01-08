@@ -28,13 +28,13 @@ describe('EthereumLinksApiCache', () => {
   let cachedApi: EthereumLinksApiCached
 
   beforeEach(() => {
-    linksApi = {
+    linksApi = (({
       addLink: jasmine.createSpy('addLink'),
       createAddLinkTransaction: jasmine.createSpy('createAddLinkTransaction'),
       executeSignedTransaction: jasmine.createSpy('executeSignedTransaction'),
       getLinksCount: jasmine.createSpy('getLinksCount'),
       listAllLinks: jasmine.createSpy('listAllLinks'),
-    }
+    }: any): LinksApi)
 
     cachedApi = new EthereumLinksApiCached(linksApi)
   })
@@ -58,7 +58,7 @@ describe('EthereumLinksApiCache', () => {
   })
 
   describe('listAllLinks', () => {
-    it('should invoke api', () => {
+    it('should invoke api', (done) => {
       linksApi.listAllLinks.and
         .returnValue(Promise.resolve([createTestLinkSpec('label', 'url')]))
       linksApi.getLinksCount.and
@@ -109,7 +109,7 @@ describe('EthereumLinksApiCache', () => {
 
   describe('addLink', () => {
     it('should invoke api', () => {
-      cachedApi.addLink()
+      cachedApi.addLink(createTestLinkSpec('label', 'url'))
       expect(linksApi.addLink).toHaveBeenCalled()
     })
 
